@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR 404 - Yatharth Rao</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: #090205; background-image: radial-gradient(circle at 50% 0%, #2b0510 0%, #090205 70%); color: #fce8ef; margin: 0; padding: 0; overflow-x: hidden; min-height: 100vh; }
+        .screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; background: #090205; }
+        #access-screen { background: radial-gradient(circle, #3d0815 0%, #090205 85%); }
+        .access-box { background: rgba(23, 5, 12, 0.9); border: 2px solid #ff0044; padding: 40px 30px; border-radius: 20px; text-align: center; box-shadow: 0 0 40px rgba(255, 0, 68, 0.5), inset 0 0 20px rgba(128, 0, 32, 0.6); animation: pulseGlow 1.8s infinite ease-in-out; max-width: 90%; width: 380px; }
+        .access-box h1 { color: #ff0044; font-size: 2.2rem; margin: 0; text-shadow: 0 0 15px #ff0044, 0 0 25px #800020; letter-spacing: 3px; font-weight: 900; }
+        .member-id { color: #ff3366; font-size: 1.8rem; margin-top: 15px; font-weight: bold; letter-spacing: 3px; text-shadow: 0 0 12px #ff0044; }
+        .loader { border: 4px solid #2b0812; border-top: 4px solid #ff0044; border-right: 4px solid #800020; border-radius: 50%; width: 60px; height: 60px; animation: spin 0.9s linear infinite; margin-bottom: 20px; box-shadow: 0 0 20px rgba(255, 0, 68, 0.4); }
+        .welcome-text { font-size: 2.4rem; color: #ffffff; text-align: center; font-weight: 800; text-shadow: 0 0 20px #ff0044, 0 0 35px #800020; }
+        .progress-bar-bg { width: 260px; height: 10px; background: #1a050d; border: 1px solid #ff0044; border-radius: 5px; margin-top: 15px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #800020, #ff0044); transition: width 0.1s linear; }
+        #main-site { padding: 40px 20px; text-align: center; max-width: 1200px; margin: 0 auto; display: none; }
+        .header h1 { font-size: 3.2rem; color: #ff0044; margin: 0; text-shadow: 0 0 20px #ff0044, 0 0 40px #800020; letter-spacing: 3px; font-weight: 900; }
+        .header h2 { color: #e63956; font-size: 1.5rem; margin-top: 5px; font-weight: 500; }
+        .select-prompt { color: #ff99ac; font-size: 1.15rem; margin: 25px 0 10px 0; letter-spacing: 1px; }
+        .menu-options { display: flex; justify-content: center; gap: 25px; margin: 25px 0 35px 0; flex-wrap: wrap; }
+        .menu-btn { background: linear-gradient(135deg, #1f050e 0%, #3d0815 100%); border: 2px solid #ff0044; color: #ffffff; padding: 18px 35px; border-radius: 15px; font-size: 1.25rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(128, 0, 32, 0.4); }
+        .menu-btn:hover, .menu-btn.active { background: linear-gradient(135deg, #800020 0%, #ff0044 100%); box-shadow: 0 0 30px rgba(255, 0, 68, 0.8); transform: translateY(-4px); }
+        .content-section { display: none; }
+        .content-section.active-section { display: block; animation: fadeIn 0.5s ease; }
+        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 25px; }
+        .card { background: #14050a; border: 1px solid #3d0c19; border-radius: 18px; width: 230px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.35s ease; }
+        .card:hover { transform: translateY(-8px); border-color: #ff0044; box-shadow: 0 0 30px rgba(255, 0, 68, 0.4); }
+        .card img { width: 100%; height: 210px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; background: #240a13; border: 1px solid #4a1020; }
+        .card h3 { margin: 6px 0 2px 0; color: #ffffff; font-size: 1.2rem; }
+        .card .nickname { color: #ff3366; font-size: 0.9rem; font-weight: bold; margin-bottom: 8px; }
+        .card .role-tag { background: #2b0812; color: #ff809b; border: 1px solid #5c1024; font-size: 0.8rem; padding: 4px 10px; border-radius: 10px; display: inline-block; margin-bottom: 12px; }
+        .card .btn-info { background: linear-gradient(135deg, #800020 0%, #ff0044 100%); color: #ffffff; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; }
+        .gallery-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 25px; }
+        .gallery-item { background: #14050a; border: 2px solid #3d0c19; border-radius: 18px; overflow: hidden; width: 320px; box-shadow: 0 5px 25px rgba(0,0,0,0.7); transition: 0.35s ease; }
+        .gallery-item:hover { transform: translateY(-6px) scale(1.02); border-color: #ff0044; box-shadow: 0 0 30px rgba(255, 0, 68, 0.6); }
+        .gallery-item img { width: 100%; height: 250px; object-fit: cover; display: block; border-bottom: 1px solid #3d0c19; }
+        .gallery-caption { padding: 14px; font-size: 1.05rem; color: #ff99ac; font-weight: 700; background: #19060c; }
+        .more-to-create { margin-top: 45px; margin-bottom: 20px; font-size: 1.25rem; color: #ff3366; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255, 0, 68, 0.6); border-top: 1px solid #2b0812; padding-top: 25px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 1, 3, 0.92); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-content { background: #14050a; border: 2px solid #ff0044; padding: 25px; border-radius: 20px; max-width: 440px; width: 100%; position: relative; box-shadow: 0 0 45px rgba(255, 0, 68, 0.6); text-align: left; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 12px; right: 20px; font-size: 2.2rem; color: #ff4d6d; cursor: pointer; }
+        .close-btn:hover { color: #ffffff; }
+        .modal-img-container { width: 100%; background: #080204; border-radius: 14px; border: 1px solid #4a1020; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; overflow: hidden; max-height: 320px; }
+        .modal-img { width: 100%; max-height: 320px; object-fit: contain; display: block; }
+        .modal-meta { display: flex; justify-content: space-between; font-size: 0.88rem; color: #ff99ac; margin-bottom: 15px; border-bottom: 1px solid #330a16; padding-bottom: 10px; }
+        .stat-box { margin-bottom: 12px; }
+        .stat-title { font-size: 0.85rem; color: #fce8ef; display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .bar-bg { background: #290812; height: 10px; border-radius: 5px; overflow: hidden; border: 1px solid #4a1020; }
+        .bar-fill { background: linear-gradient(90deg, #800020, #ff0044); height: 100%; width: 0%; transition: width 1s ease; }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 30px rgba(255, 0, 68, 0.4); } 50% { box-shadow: 0 0 50px rgba(255, 0, 68, 0.8); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="access-screen" class="screen">
+        <div class="access-box">
+            <h1>⚠ ACCESS GRANTED ⚠</h1>
+            <p style="color: #ff99ac; margin-top: 10px; font-size: 0.9rem;">SQUAD MEMBER VERIFIED</p>
+            <div class="member-id">MEMBER ID: ERR404-001</div>
+        </div>
+    </div>
+
+    <div id="loading-screen" class="screen" style="display: none;">
+        <div class="loader"></div>
+        <div class="welcome-text">Seher mee swagat hai 🌆</div>
+        <p style="color: #ff6685; margin-top: 12px; font-size: 0.95rem;">Decrypting Squad Database...</p>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="p-bar"></div></div>
+        <p id="p-text" style="color:#ff99ac; font-size:0.85rem; margin-top:8px;">0%</p>
+    </div>
+
+    <div id="main-site">
+        <div class="header">
+            <h1>ERROR 404⚠</h1>
+            <h2>Wives Not Found!</h2>
+        </div>
+        <div class="select-prompt">👇 Choose an option to view:</div>
+        <div class="menu-options">
+            <button class="menu-btn" id="btn-info" onclick="showSection('member-info-sec', 'btn-info')">📜 Member Info</button>
+            <button class="menu-btn" id="btn-photos" onclick="showSection('photos-sec', 'btn-photos')">📸 Photo Gallery</button>
+        </div>
+        <div id="member-info-sec" class="content-section"><div class="grid" id="squad-grid"></div></div>
+        <div id="photos-sec" class="content-section">
+            <p style="color: #ff99ac; font-size: 1.1rem; margin-bottom: 20px;">🔥 ERROR 404 Squad Memory Vault 🔥</p>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="../group1.jpg" alt="Squad Photo 1" onerror="this.src='group1.jpg'"><div class="gallery-caption">📸 Squad Memory #1</div></div>
+                <div class="gallery-item"><img src="../group2.jpg" alt="Squad Photo 2" onerror="this.src='group2.jpg'"><div class="gallery-caption">🔥 Squad Memory #2</div></div>
+                <div class="gallery-item"><img src="../group3.jpg" alt="Squad Photo 3" onerror="this.src='group3.jpg'"><div class="gallery-caption">⚡ Squad Memory #3</div></div>
+                <div class="gallery-item"><img src="../group4.jpg" alt="Squad Photo 4" onerror="this.src='group4.jpg'"><div class="gallery-caption">💀 Squad Memory #4</div></div>
+                <div class="gallery-item"><img src="../group5.jpg" alt="Squad Photo 5" onerror="this.src='group5.jpg'"><div class="gallery-caption">🃏 Squad Memory #5</div></div>
+                <div class="gallery-item"><img src="../group6.jpg" alt="Squad Photo 6" onerror="this.src='group6.jpg'"><div class="gallery-caption">💥 Squad Memory #6</div></div>
+            </div>
+            <div class="more-to-create">✨ More memories to create... ✨</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="info-modal" onclick="closeModalOnOuter(event)">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-img-container"><img id="m-img" class="modal-img" src="" alt="Member Photo"></div>
+            <h2 id="m-name" style="margin: 0; color: #ff0044; font-size: 1.7rem;">Name</h2>
+            <p id="m-nickname" style="color: #ff6685; font-weight: bold; margin: 4px 0 12px 0;">Nickname</p>
+            <div class="modal-meta">
+                <div>ID: <span id="m-id" style="color:#ff0044; font-weight:bold;"></span></div>
+                <div>DOB: <span id="m-dob" style="color:#ff0044; font-weight:bold;"></span></div>
+                <div>Status: <span id="m-status" style="color:#ff3366; font-weight:bold;"></span></div>
+            </div>
+            <div id="m-stats"></div>
+        </div>
+    </div>
+
+    <script>
+        var squad = [
+            { id: "ERR404-001", name: "Yatharth Rao", nickname: "Yathuu", role: "Leader 👑", dob: "15-07-2008", status: "Alive ✓ Verified", img: "../yatharth.jpg", stats: { "🎭 Bakchodi Level": 72, "🔥 Roasting Skill": 80, "🎮 Game Sense": 85, "💀 Aura": 90 } },
+            { id: "ERR404-002", name: "Ishaan Gupta", nickname: "Chor", role: "Debate Lord 🗣️", dob: "13-12-2008", status: "Alive ✓ Verified", img: "../ishaan.jpg", stats: { "🎭 Bakchodi Level": 80, "🔥 Roasting Skill": 65, "🎮 Game Sense": 99, "💀 Aura": 88 } },
+            { id: "ERR404-003", name: "Raj Singh", nickname: "Raju", role: "Game Changer ⚡", dob: "15-11-2008", status: "Alive ✓ Verified", img: "../raj.jpg", stats: { "🎭 Bakchodi Level": 80, "🔥 Roasting Skill": 90, "🎮 Game Sense": 70, "💀 Aura": 95 } },
+            { id: "ERR404-004", name: "Swastik Dewangan", nickname: "Shu Shu", role: "Wild Card 🃏", dob: "02-01-2008", status: "Alive ✓ Verified", img: "../swastik.jpg", stats: { "🎭 Bakchodi Level": 85, "🔥 Roasting Skill": 80, "🎮 Game Sense": 85, "💀 Aura": 92 } },
+            { id: "ERR404-005", name: "Priyanshu Kumar", nickname: "Bauua", role: "Chaos Creator 💥", dob: "25-11-2007", status: "Alive ✓ Verified", img: "../priyanshu.jpg", stats: { "🎭 Bakchodi Level": 82, "🔥 Roasting Skill": 60, "🎮 Game Sense": 55, "💀 Aura": 85 } }
+        ];
+
+        window.addEventListener('load', function() {
+            var grid = document.getElementById('squad-grid');
+            if (grid) {
+                grid.innerHTML = '';
+                for (var i = 0; i < squad.length; i++) {
+                    var m = squad[i];
+                    grid.innerHTML += '<div class="card" id="' + m.id + '" onclick="openModal(\'' + m.id + '\')">' +
+                        '<img src="' + m.img + '" alt="' + m.name + '" onerror="this.src=\'' + m.img.replace('../','') + '\'">' +
+                        '<h3>' + m.name + '</h3>' +
+                        '<div class="nickname">"' + m.nickname + '"</div>' +
+                        '<div class="role-tag">' + m.role + '</div>' +
+                        '<button class="btn-info">View Info & Stats</button>' +
+                        '</div>';
+                }
+            }
+
+            // Step 1 (2 Seconds) -> Step 2
+            setTimeout(function() {
+                document.getElementById('access-screen').style.display = 'none';
+                document.getElementById('loading-screen').style.display = 'flex';
+
+                // Progress Bar animation (2.2 seconds)
+                var prog = 0;
+                var pBar = document.getElementById('p-bar');
+                var pText = document.getElementById('p-text');
+                var interval = setInterval(function() {
+                    prog += 4;
+                    if(prog > 100) prog = 100;
+                    if(pBar) pBar.style.width = prog + '%';
+                    if(pText) pText.innerText = prog + '%';
+                    if(prog >= 100) {
+                        clearInterval(interval);
+                        setTimeout(function() {
+                            document.getElementById('loading-screen').style.display = 'none';
+                            document.getElementById('main-site').style.display = 'block';
+                        }, 300);
+                    }
+                }, 80);
+
+            }, 2000);
+        });
+
+        function showSection(secId, btnId) {
+            var secs = document.querySelectorAll('.content-section');
+            for (var i = 0; i < secs.length; i++) secs[i].classList.remove('active-section');
+            var btns = document.querySelectorAll('.menu-btn');
+            for (var j = 0; j < btns.length; j++) btns[j].classList.remove('active');
+            document.getElementById(secId).classList.add('active-section');
+            document.getElementById(btnId).classList.add('active');
+        }
+
+        function openModal(id) {
+            var m = null;
+            for (var i = 0; i < squad.length; i++) { if (squad[i].id === id) { m = squad[i]; break; } }
+            if (!m) return;
+            document.getElementById('m-img').src = m.img;
+            document.getElementById('m-name').innerText = m.name;
+            document.getElementById('m-nickname').innerText = '"' + m.nickname + '" - ' + m.role;
+            document.getElementById('m-id').innerText = m.id;
+            document.getElementById('m-dob').innerText = m.dob;
+            document.getElementById('m-status').innerText = m.status;
+            var statsContainer = document.getElementById('m-stats');
+            statsContainer.innerHTML = '';
+            var keys = Object.keys(m.stats);
+            for (var k = 0; k < keys.length; k++) {
+                var keyName = keys[k];
+                var valNum = m.stats[keyName];
+                var statBox = document.createElement('div');
+                statBox.className = 'stat-box';
+                statBox.innerHTML = '<div class="stat-title"><span>' + keyName + '</span><span>' + valNum + '%</span></div>' +
+                    '<div class="bar-bg"><div class="bar-fill" id="bar-' + k + '" style="width: 0%"></div></div>';
+                statsContainer.appendChild(statBox);
+            }
+            document.getElementById('info-modal').style.display = 'flex';
+            setTimeout(function() {
+                for (var k = 0; k < keys.length; k++) {
+                    var barEl = document.getElementById('bar-' + k);
+                    if (barEl) barEl.style.width = m.stats[keys[k]] + '%';
+                }
+            }, 100);
+        }
+        function closeModal() { document.getElementById('info-modal').style.display = 'none'; }
+        function closeModalOnOuter(e) { if (e.target.id === 'info-modal') closeModal(); }
+    </script>
+</body>
+</html>
